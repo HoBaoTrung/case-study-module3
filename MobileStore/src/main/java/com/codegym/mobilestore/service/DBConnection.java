@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static String jdbcURL = "jdbc:mysql://localhost:3306/mobilestore";
+    private static String jdbcURL = "jdbc:mysql://localhost:3306/mobilestore?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Ho_Chi_Minh&useLegacyDatetimeCode=false";
     private static String user = "root";
     private static String password = "trung@123";
 
@@ -20,5 +20,21 @@ public class DBConnection {
             e.printStackTrace();
         }
         return conn;
+    }
+
+    public static void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
+        }
     }
 }

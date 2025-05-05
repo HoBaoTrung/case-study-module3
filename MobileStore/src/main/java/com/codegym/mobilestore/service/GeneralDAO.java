@@ -1,8 +1,10 @@
 package com.codegym.mobilestore.service;
 
-import java.util.List;
+import com.codegym.mobilestore.model.Product;
 
-public interface GeneralDAO <E>{
-   List<E> findAll();
-   List<E> findAllWithStoreProcedure();
+import java.util.List;
+import java.util.Map;
+
+public interface GeneralDAO <E> {
+   E findById(int id);
 }

@@ -36,12 +36,12 @@ CREATE TABLE Product (
     category_id INT,
     image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES Categories(category_id),
-    FOREIGN KEY (brand_id) REFERENCES Brands(brand_id)
+    FOREIGN KEY (category_id) REFERENCES Category(category_id),
+    FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
 INSERT INTO Product (product_name, description, price, stock_quantity, category_id, image_url, brand_id) VALUES
 -- Smartphone
-('iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max với chip A16 Bionic, màn hình Super Retina XDR', 32990000, 50, 1, 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-14-pro-max-256gb.png', 1),
+('iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max với chip A16 Bionic, màn hình Super Retina XDR', 32990000, 1, 1, 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-14-pro-max-256gb.png', 1),
 ('Samsung Galaxy S23 Ultra', 'Flagship của Samsung với camera 200MP và S-Pen', 29990000, 40, 1, 'https://azmobile.net/files/product/2025/01/18/678b63651943a.jpg', 2),
 ('Xiaomi 13T Pro', 'Điện thoại cao cấp với chip Snapdragon 8 Gen 2', 17990000, 60, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAsOw4HYa6BDM7c7_OEA43LUWrCI4B7JgtXQ&s', 3),
 
@@ -56,3 +56,30 @@ INSERT INTO Product (product_name, description, price, stock_quantity, category_
 -- Đồng hồ thông minh
 ('Apple Watch Series 9', 'Smartwatch cao cấp với tính năng đo điện tâm đồ, SPO2', 11990000, 35, 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzqK7AR-y1DArmdxqsuELok6tM39tfpdjKKQ&s', 1),
 ('Xiaomi Watch S1 Active', 'Đồng hồ thông minh giá tốt, nhiều tính năng thể thao', 3490000, 80, 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQeLYIGihzbT3AXYnOidRHuRELa_t78rOUbA&s', 3);
+
+create table customer_info(
+	id int primary key auto_increment,
+    name varchar(255),
+    phone varchar(10),
+    address varchar(255)
+    
+);
+
+CREATE TABLE orders (
+     id int primary key auto_increment,
+     total_price double,
+     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+     customer_id int,
+     payment_method varchar(10),
+     foreign key(customer_id) references customer_info(id)
+);
+
+CREATE TABLE order_detail (
+     order_id int,
+     product_id int,
+     quantity int not null,
+     primary key(order_id, product_id),
+     FOREIGN KEY (product_id) REFERENCES Product(product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)     
+);
+

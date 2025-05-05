@@ -1,17 +1,16 @@
 package com.codegym.mobilestore.model;
 
-import java.math.BigDecimal;
 
 public class Product {
     private Integer productId;
     private String productName;
     private String description;
-    private BigDecimal price;
+    private double price;
     private Integer stockQuantity;
     private String imageUrl;
     public Product() {}
 
-    public Product(Integer productId, String productName, String description, BigDecimal price, Integer stockQuantity, String imageUrl) {
+    public Product(Integer productId, String productName, String description, double price, Integer stockQuantity, String imageUrl) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
@@ -44,11 +43,11 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -66,5 +65,16 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "stockQuantity=" + stockQuantity +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productId=" + productId +
+                '}';
     }
 }
