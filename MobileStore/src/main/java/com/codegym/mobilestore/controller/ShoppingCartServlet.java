@@ -6,10 +6,7 @@ import com.codegym.mobilestore.service.ProductDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +36,7 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) action = "";
-
+        HttpSession session = request.getSession();
         try {
             switch (action) {
                 case "add":
@@ -54,6 +51,11 @@ public class ShoppingCartServlet extends HttpServlet {
                 default:
                     break;
             }
+            Cookie jsessionCookie = new Cookie("JSESSIONID", session.getId());
+            jsessionCookie.setMaxAge(7 * 24 * 60 * 60); // giữ cookie 7 ngày
+            jsessionCookie.setPath("/"); // rất quan trọng, tránh lỗi không nhận cookie
+            response.addCookie(jsessionCookie);
+
             response.sendRedirect("/carts");
         } catch (Exception e) {
             e.printStackTrace();
